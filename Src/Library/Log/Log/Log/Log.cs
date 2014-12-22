@@ -93,8 +93,8 @@ namespace Fre.Library.Log
         /// <summary>
         /// 默认Debug日志
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
         public static void Debug(object message, Exception e = null)
         {
             Debug(null, message, e);
@@ -103,159 +103,21 @@ namespace Fre.Library.Log
         /// <summary>
         /// 带模块日志对象名称的Debug日志
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
         public static void Debug<T>(object message, Exception e = null)
         {
             Debug(typeof(T), message, e);
         }
 
-        #endregion
-
-        #region InfoRecord
-
         /// <summary>
-        /// 默认Info日志
+        /// 带模块日志对象名称的Debug日志
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Info(object message, Exception e = null)
-        {
-            Info(null, message, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Info日志
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Info<T>(object message, Exception e = null)
-        {
-            Info(typeof(T), message, e);
-        }
-
-        #endregion
-
-        #region WarnRecord
-
-        /// <summary>
-        /// 默认Warn日志
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Warn(object message, Exception e = null)
-        {
-            Warn(null, message, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Warn日志
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Warn<T>(object message, Exception e = null)
-        {
-            Warn(typeof(T), message, e);
-        }
-
-        #endregion
-
-        #region ErrorRecord
-
-        /// <summary>
-        /// 默认Error日志
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Error(object message, Exception e = null)
-        {
-            Error(null, message, e);
-        }
-
-        /// <summary>
-        /// 默认Error日志，适用与Catch捕获的错误输出
-        /// </summary>
-        /// <param name="e"></param>
-        public static void Error(Exception e)
-        {
-            Error(null, null, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Error日志
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Error<T>(object message, Exception e = null)
-        {
-            Error(typeof(T), message, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Error日志，适用与Catch捕获的错误输出
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="e"></param>
-        public static void Error<T>(Exception e)
-        {
-            Error(typeof(T), null, e);
-        }
-
-        #endregion
-
-        #region FatalRecord
-
-        /// <summary>
-        /// 默认Fatal日志
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Fatal(object message, Exception e = null)
-        {
-            Fatal(null, message, e);
-        }
-
-        /// <summary>
-        /// 默认Fatal日志，适用与Catch捕获的错误输出
-        /// </summary>
-        /// <param name="e"></param>
-        public static void Fatal(Exception e)
-        {
-            Fatal(null, null, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Fatal日志
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="e"></param>
-        public static void Fatal<T>(object message, Exception e = null)
-        {
-            Fatal(typeof(T), message, e);
-        }
-
-        /// <summary>
-        /// 带模块日志对象名称的Fatal日志，适用与Catch捕获的错误输出
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="e"></param>
-        public static void Fatal<T>(Exception e)
-        {
-            Fatal(typeof(T), null, e);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region 私有方法
-
-        private static void Debug(Type loggerType, object message, Exception e)
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Debug(Type loggerType, object message, Exception e = null)
         {
             if (loggerType == null)
             {
@@ -267,7 +129,7 @@ namespace Fre.Library.Log
                     }
                     else
                     {
-                        _defaultLogger.Debug(message, e);    
+                        _defaultLogger.Debug(message, e);
                     }
                 }
             }
@@ -289,7 +151,38 @@ namespace Fre.Library.Log
             }
         }
 
-        private static void Info(Type loggerType, object message, Exception e)
+        #endregion
+
+        #region InfoRecord
+
+        /// <summary>
+        /// 默认Info日志
+        /// </summary>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Info(object message, Exception e = null)
+        {
+            Info(null, message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Info日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Info<T>(object message, Exception e = null)
+        {
+            Info(typeof(T), message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Info日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Info(Type loggerType, object message, Exception e = null)
         {
             if (loggerType == null)
             {
@@ -323,7 +216,38 @@ namespace Fre.Library.Log
             }
         }
 
-        private static void Warn(Type loggerType, object message, Exception e)
+        #endregion
+
+        #region WarnRecord
+
+        /// <summary>
+        /// 默认Warn日志
+        /// </summary>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Warn(object message, Exception e = null)
+        {
+            Warn(null, message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Warn日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Warn<T>(object message, Exception e = null)
+        {
+            Warn(typeof(T), message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Warn日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Warn(Type loggerType, object message, Exception e = null)
         {
             if (loggerType == null)
             {
@@ -357,7 +281,67 @@ namespace Fre.Library.Log
             }
         }
 
-        private static void Error(Type loggerType, object message, Exception e)
+        #endregion
+
+        #region ErrorRecord
+
+        /// <summary>
+        /// 默认Error日志
+        /// </summary>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Error(object message, Exception e = null)
+        {
+            Error(null, message, e);
+        }
+
+        /// <summary>
+        /// 默认Error日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Error(Exception e)
+        {
+            Error(null, null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Error日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Error<T>(object message, Exception e = null)
+        {
+            Error(typeof(T), message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Error日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="e">Exception</param>
+        public static void Error<T>(Exception e)
+        {
+            Error(typeof(T), null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Error日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="e">Exception</param>
+        public static void Error(Type loggerType, Exception e)
+        {
+            Error(loggerType, null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Error日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Error(Type loggerType, object message, Exception e = null)
         {
             if (loggerType == null)
             {
@@ -391,7 +375,67 @@ namespace Fre.Library.Log
             }
         }
 
-        private static void Fatal(Type loggerType, object message, Exception e)
+        #endregion
+
+        #region FatalRecord
+
+        /// <summary>
+        /// 默认Fatal日志
+        /// </summary>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Fatal(object message, Exception e = null)
+        {
+            Fatal(null, message, e);
+        }
+
+        /// <summary>
+        /// 默认Fatal日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Fatal(Exception e)
+        {
+            Fatal(null, null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Fatal日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Fatal<T>(object message, Exception e = null)
+        {
+            Fatal(typeof(T), message, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Fatal日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="e">Exception</param>
+        public static void Fatal<T>(Exception e)
+        {
+            Fatal(typeof(T), null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Fatal日志，适用与Catch捕获的错误输出
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="e">Exception</param>
+        public static void Fatal(Type loggerType, Exception e)
+        {
+            Fatal(loggerType, null, e);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的Fatal日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="message">内容</param>
+        /// <param name="e">Exception</param>
+        public static void Fatal(Type loggerType, object message, Exception e = null)
         {
             if (loggerType == null)
             {
@@ -424,6 +468,8 @@ namespace Fre.Library.Log
                 }
             }
         }
+
+        #endregion
 
         #endregion
     }
