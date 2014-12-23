@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
-using log4net.Config;
-using System.Collections.Generic;
+using global::log4net;
+using global::log4net.Config;
 
-using log4net;
-
-namespace Fre.Library.Log
+namespace Fre.Library.Log.log4net.Wrap
 {
     /// <summary>
     /// 日志辅助

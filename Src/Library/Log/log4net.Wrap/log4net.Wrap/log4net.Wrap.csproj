@@ -7,8 +7,8 @@
     <ProjectGuid>{28A964B8-94B1-4FCC-9A0D-7C0FB7EED7B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fre.Library.Log</RootNamespace>
-    <AssemblyName>Log</AssemblyName>
+    <RootNamespace>Fre.Library.Log.log4net.Wrap</RootNamespace>
+    <AssemblyName>log4net.Wrap</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\..\Lib\Debug\Log.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\..\..\Lib\Debug\log4net.Wrap.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\..\Lib\Release\Log.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\..\..\Lib\Release\log4net.Wrap.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">

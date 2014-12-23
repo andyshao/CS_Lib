@@ -7,10 +7,10 @@
 @cd ..\..\..\
 @xcopy log4net\build\bin\log4net\net\2.0\release\*.* ..\..\..\Publish\Library\ /s /e /y
 
-@echo ±‡“ÎLog
+@echo ±‡“Îlog4net.Wrap
 
-@cd Log
-%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe Log.sln /t:Rebuild /property:Configuration=Release /l:FileLogger,Microsoft.Build.Engine;logfile=log4net.vs2010.log
+@cd log4net.Wrap
+%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe Log4netWrap.sln /t:Rebuild /property:Configuration=Release /l:FileLogger,Microsoft.Build.Engine;logfile=Log4netWrap.log
 @echo Close notepad to continue...
-@if errorlevel 1 @notepad Log.log
+@if errorlevel 1 @notepad Log4netWrap.log
 @cd ..\
