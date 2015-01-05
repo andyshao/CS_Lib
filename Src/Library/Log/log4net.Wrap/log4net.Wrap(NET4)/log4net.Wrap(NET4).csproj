@@ -4,32 +4,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28A964B8-94B1-4FCC-9A0D-7C0FB7EED7B8}</ProjectGuid>
+    <ProjectGuid>{8F974026-182F-4CF1-AC08-839E9FC5BFE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fre.Library.Log.log4net.Wrap</RootNamespace>
     <AssemblyName>log4net.Wrap</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Lib\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\Lib\External\NET4\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\..\Lib\Debug\log4net.Wrap.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\..\..\Lib\External\NET4\Debug\log4net.Wrap.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\Lib\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\Lib\External\NET4\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\..\Lib\Release\log4net.Wrap.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\..\..\Lib\External\NET4\Release\log4net.Wrap.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -44,24 +45,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\log4net.Wrap\PerformanceCounterHistoryInfo.cs">
+      <Link>PerformanceCounterHistoryInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\log4net.Wrap\PerformanceHelper.cs">
+      <Link>PerformanceHelper.cs</Link>
+    </Compile>
     <Compile Include="Log.cs" />
-    <Compile Include="PerformanceHelper.cs" />
-    <Compile Include="PerformanceCounterHistoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Config\log4netEmbedManifest.config" />
-    <None Include="Config\log4net.config">
+    <None Include="..\log4net.Wrap\Config\log4net.config">
+      <Link>Config\log4net.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="..\log4net.Wrap\Config\log4netEmbedManifest.config">
+      <Link>Config\log4netEmbedManifest.config</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

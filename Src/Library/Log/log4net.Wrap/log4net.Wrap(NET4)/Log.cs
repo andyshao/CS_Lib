@@ -7,6 +7,7 @@ using global::log4net.Config;
 
 namespace Fre.Library.Log.log4net.Wrap
 {
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
     /// <summary>
@@ -490,9 +491,18 @@ namespace Fre.Library.Log.log4net.Wrap
         /// 性能计数开始
         /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
         /// </summary>
-        public static void PerformanceStart([CallerFilePath]string filePath="", [CallerMemberName]string methodName="")
+        public static void PerformanceStart()
         {
-            PerformanceHelper.StartPerformance(filePath, methodName);
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            var stackFrame = new StackFrame(1);
+            var fileName = stackFrame.GetFileName();
+            var methodName = stackFrame.GetMethod().Name;
+
+            stopWatch.Stop();
+
+            PerformanceHelper.StartPerformance(fileName, methodName, stopWatch.ElapsedTicks);
         }
 
         /// <summary>
@@ -511,9 +521,18 @@ namespace Fre.Library.Log.log4net.Wrap
         /// 性能计数结束
         /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
         /// </summary>
-        public static void PerformanceStop([CallerFilePath]string filePath = "", [CallerMemberName]string methodName = "")
+        public static void PerformanceStop()
         {
-            PerformanceHelper.StopPerformance(filePath, methodName);
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            var stackFrame = new StackFrame(1);
+            var fileName = stackFrame.GetFileName();
+            var methodName = stackFrame.GetMethod().Name;
+
+            stopWatch.Stop();
+
+            PerformanceHelper.StopPerformance(fileName, methodName, stopWatch.ElapsedTicks);
         }
 
         #endregion
