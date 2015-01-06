@@ -496,7 +496,7 @@ namespace Fre.Library.Log.log4net.Wrap
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            var stackFrame = new StackFrame(1);
+            var stackFrame = new StackFrame(1, true);
             var fileName = stackFrame.GetFileName();
             var methodName = stackFrame.GetMethod().Name;
 
@@ -526,7 +526,7 @@ namespace Fre.Library.Log.log4net.Wrap
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            var stackFrame = new StackFrame(1);
+            var stackFrame = new StackFrame(1, true);
             var fileName = stackFrame.GetFileName();
             var methodName = stackFrame.GetMethod().Name;
 
