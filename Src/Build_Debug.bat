@@ -1,7 +1,3 @@
-@attrib -R "..\Publish\*.*" /S /D
-@echo É¾³ý¾É³ÌÐò
-@rmdir "..\Publish\Library\" /s /q
-
 @cd Library
 @call Library_Build_Debug.bat
 
