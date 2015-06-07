@@ -4,6 +4,6 @@
 nuget pack log4net.Wrap.csproj -Prop Configuration=Release
 @cd ..\..\
 
-@cd log4net.Wrap\log4net.Wrap(NET4)
-nuget pack log4net.Wrap(NET4).csproj -Prop Configuration=Release
-@cd ..\..\
+:@cd log4net.Wrap\log4net.Wrap(NET4)
+:nuget pack log4net.Wrap(NET4).csproj -Prop Configuration=Release
+:@cd ..\..\

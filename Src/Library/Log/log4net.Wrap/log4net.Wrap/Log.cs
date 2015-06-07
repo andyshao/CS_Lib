@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 using global::log4net;
 using global::log4net.Config;
 
 namespace Fre.Library.Log.log4net.Wrap
 {
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// 日志辅助
     /// </summary>
-    public static class Log
+    public static partial class Log
     {
         #region 字段
 
@@ -40,6 +39,12 @@ namespace Fre.Library.Log.log4net.Wrap
                 return _defaultLogger;
             }
         }
+
+        /// <summary>
+        /// 空类型日志自动查找对应的Type类型
+        /// <remarks>默认为false，生产环境推荐关闭，调试可以打开</remarks>
+        /// </summary>
+        public static bool NullTypeAtuoDetect { get; set; }
 
         #endregion
 
@@ -109,7 +114,7 @@ namespace Fre.Library.Log.log4net.Wrap
         /// <param name="e">Exception</param>
         public static void Debug(Type loggerType, object message, Exception e = null)
         {
-            if (loggerType == null)
+            if (loggerType == null && !NullTypeAtuoDetect)
             {
                 if (_defaultLogger.IsDebugEnabled)
                 {
@@ -125,18 +130,26 @@ namespace Fre.Library.Log.log4net.Wrap
             }
             else
             {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
                 if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
                 {
                     _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
                 }
 
-                if (e == null)
+                if (_loggersCacheDictionary[loggerType.FullName].IsDebugEnabled)
                 {
-                    _loggersCacheDictionary[loggerType.FullName].Debug(message);
-                }
-                else
-                {
-                    _loggersCacheDictionary[loggerType.FullName].Debug(message, e);
+                    if (e == null)
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Debug(message);
+                    }
+                    else
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Debug(message, e);
+                    }
                 }
             }
         }
@@ -174,7 +187,7 @@ namespace Fre.Library.Log.log4net.Wrap
         /// <param name="e">Exception</param>
         public static void Info(Type loggerType, object message, Exception e = null)
         {
-            if (loggerType == null)
+            if (loggerType == null && !NullTypeAtuoDetect)
             {
                 if (_defaultLogger.IsInfoEnabled)
                 {
@@ -190,18 +203,26 @@ namespace Fre.Library.Log.log4net.Wrap
             }
             else
             {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
                 if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
                 {
                     _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
                 }
 
-                if (e == null)
+                if (_loggersCacheDictionary[loggerType.FullName].IsInfoEnabled)
                 {
-                    _loggersCacheDictionary[loggerType.FullName].Info(message);
-                }
-                else
-                {
-                    _loggersCacheDictionary[loggerType.FullName].Info(message, e);
+                    if (e == null)
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Info(message);
+                    }
+                    else
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Info(message, e);
+                    }
                 }
             }
         }
@@ -239,7 +260,7 @@ namespace Fre.Library.Log.log4net.Wrap
         /// <param name="e">Exception</param>
         public static void Warn(Type loggerType, object message, Exception e = null)
         {
-            if (loggerType == null)
+            if (loggerType == null && !NullTypeAtuoDetect)
             {
                 if (_defaultLogger.IsWarnEnabled)
                 {
@@ -255,18 +276,26 @@ namespace Fre.Library.Log.log4net.Wrap
             }
             else
             {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
                 if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
                 {
                     _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
                 }
 
-                if (e == null)
+                if (_loggersCacheDictionary[loggerType.FullName].IsWarnEnabled)
                 {
-                    _loggersCacheDictionary[loggerType.FullName].Warn(message);
-                }
-                else
-                {
-                    _loggersCacheDictionary[loggerType.FullName].Warn(message, e);
+                    if (e == null)
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Warn(message);
+                    }
+                    else
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Warn(message, e);
+                    }
                 }
             }
         }
@@ -333,7 +362,7 @@ namespace Fre.Library.Log.log4net.Wrap
         /// <param name="e">Exception</param>
         public static void Error(Type loggerType, object message, Exception e = null)
         {
-            if (loggerType == null)
+            if (loggerType == null && !NullTypeAtuoDetect)
             {
                 if (_defaultLogger.IsErrorEnabled)
                 {
@@ -349,18 +378,26 @@ namespace Fre.Library.Log.log4net.Wrap
             }
             else
             {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
                 if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
                 {
                     _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
                 }
 
-                if (e == null)
+                if (_loggersCacheDictionary[loggerType.FullName].IsErrorEnabled)
                 {
-                    _loggersCacheDictionary[loggerType.FullName].Error(message);
-                }
-                else
-                {
-                    _loggersCacheDictionary[loggerType.FullName].Error(message, e);
+                    if (e == null)
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Error(message);
+                    }
+                    else
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Error(message, e);
+                    }
                 }
             }
         }
@@ -427,7 +464,7 @@ namespace Fre.Library.Log.log4net.Wrap
         /// <param name="e">Exception</param>
         public static void Fatal(Type loggerType, object message, Exception e = null)
         {
-            if (loggerType == null)
+            if (loggerType == null && !NullTypeAtuoDetect)
             {
                 if (_defaultLogger.IsFatalEnabled)
                 {
@@ -443,69 +480,56 @@ namespace Fre.Library.Log.log4net.Wrap
             }
             else
             {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
                 if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
                 {
                     _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
                 }
 
-                if (e == null)
+                if (_loggersCacheDictionary[loggerType.FullName].IsFatalEnabled)
                 {
-                    _loggersCacheDictionary[loggerType.FullName].Fatal(message);
-                }
-                else
-                {
-                    _loggersCacheDictionary[loggerType.FullName].Fatal(message, e);
+                    if (e == null)
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Fatal(message);
+                    }
+                    else
+                    {
+                        _loggersCacheDictionary[loggerType.FullName].Fatal(message, e);
+                    }
                 }
             }
         }
 
         #endregion
 
-        #region PerformanceRecord
-
-        /// <summary>
-        /// 性能计数开始
-        /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
-        /// </summary>
-        public static void PerformanceStart(object key)
-        {
-            if (key != null && !string.IsNullOrEmpty(key.ToString()))
-            {
-                PerformanceHelper.StartPerformance(key.ToString());
-            }
-        }
-
-        /// <summary>
-        /// 性能计数开始
-        /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
-        /// </summary>
-        public static void PerformanceStart([CallerFilePath]string filePath="", [CallerMemberName]string methodName="")
-        {
-            PerformanceHelper.StartPerformance(filePath, methodName);
-        }
-
-        /// <summary>
-        /// 性能计数结束
-        /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
-        /// </summary>
-        public static void PerformanceStop(object key)
-        {
-            if (key != null && !string.IsNullOrEmpty(key.ToString()))
-            {
-                PerformanceHelper.StopPerformance(key.ToString());
-            }
-        }
-
-        /// <summary>
-        /// 性能计数结束
-        /// <remarks>性能计数本身会消耗性能，在想统计性能的方法段的开始调用该方法，在末尾调用PerformanceStop()方法可输出日志，两者必须匹配</remarks>
-        /// </summary>
-        public static void PerformanceStop([CallerFilePath]string filePath = "", [CallerMemberName]string methodName = "")
-        {
-            PerformanceHelper.StopPerformance(filePath, methodName);
-        }
-
         #endregion
+
+        #region 私有方法
+
+        /// <summary>
+        /// 自动探查类型
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        private static Type AutoDetectType(int level = 0)
+        {
+            int thisLevel = 0;
+            thisLevel += level + 2;
+
+            var stackFrame = new StackFrame(thisLevel, false);
+            var type = stackFrame.GetMethod().ReflectedType;
+
+            if (type == typeof(Log))
+            {
+                return AutoDetectType(thisLevel);
+            }
+
+            return type;
+        }
 
         #endregion
     }

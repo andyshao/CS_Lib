@@ -8,6 +8,8 @@ using System.Diagnostics;
 
 namespace NugetPushTool
 {
+    using System.Threading;
+
     class Program
     {
         static void Main(string[] args)
@@ -60,11 +62,14 @@ namespace NugetPushTool
                 process.StandardInput.WriteLine(string.Format("CD {0}", srcDir[0].FullName));
 
                 //调用打包脚本
+                Console.WriteLine("开始打包");
                 process.StandardInput.WriteLine(nugetPackBat[0].FullName);
+                Thread.Sleep(2000);
 
                 //切换回工具目录
                 process.StandardInput.WriteLine(string.Format("CD {0}", currentDir.FullName));
 
+                Console.WriteLine("打包完毕，准备推送");
                 //收集Src下的待推送文件
                 //规则为目录下有两个nupkg文件，删除版本号小的那个，推送大的那个
                 var nupkgList = srcDir[0].GetFiles("*.nupkg", SearchOption.AllDirectories);
@@ -77,15 +82,27 @@ namespace NugetPushTool
                         continue;
                     }
 
+                    List<FileInfo> toDelelteList;
                     //执行一次删除多余的操作，如果自身还存在再执行推送
-                    var deleteResult = DeleteMoreNupkgFile(fileInfo);
+                    var newFileInfo = DeleteMoreNupkgFile(fileInfo, out toDelelteList);
 
                     //执行过删除旧dll的操作才推送
-                    if (deleteResult && fileInfo.Exists)
+                    if (newFileInfo != null && newFileInfo.Exists)
                     {
-                        process.StandardInput.WriteLine(string.Format("NuGet.exe push {0}", fileInfo.FullName));
+                        Console.WriteLine(string.Format("准备推送文件{0}", newFileInfo.FullName));
+                        process.StandardInput.WriteLine(string.Format("nuget push {0}", newFileInfo.FullName));
+                        if (toDelelteList != null && toDelelteList.Any())
+                        {
+                            foreach (var info in toDelelteList)
+                            {
+                                Console.WriteLine(string.Format("发现低版本号文件{0}，执行删除", info.FullName));
+                                File.Delete(info.FullName);
+                            }
+                        }
                     }
                 }
+
+                Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -94,9 +111,10 @@ namespace NugetPushTool
             }
         }
 
-        private static bool DeleteMoreNupkgFile(FileInfo fileInfo)
+        private static FileInfo DeleteMoreNupkgFile(FileInfo fileInfo, out List<FileInfo> toDelelteList)
         {
-            var result = false;
+            FileInfo result = null;
+            toDelelteList = new List<FileInfo>();
 
             if (fileInfo != null && fileInfo.Exists)
             {
@@ -109,9 +127,10 @@ namespace NugetPushTool
 
                     for (int i = 1; i < nupkgFiles.Count(); i++)
                     {
-                        File.Delete(nupkgFiles[i].FullName);
-                        result = true;
+                        toDelelteList.Add(nupkgFiles[i]);
                     }
+
+                    result = nupkgFiles[0];
                 }
             }
 

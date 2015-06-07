@@ -46,14 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\log4net.Wrap\Log.cs">
+      <Link>Log.cs</Link>
+    </Compile>
     <Compile Include="..\log4net.Wrap\PerformanceCounterHistoryInfo.cs">
       <Link>PerformanceCounterHistoryInfo.cs</Link>
     </Compile>
     <Compile Include="..\log4net.Wrap\PerformanceHelper.cs">
       <Link>PerformanceHelper.cs</Link>
     </Compile>
-    <Compile Include="Log.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\log4net.Wrap\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="LogPerformancePartial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\log4net.Wrap\Config\log4net.config">

@@ -4,6 +4,6 @@
 nuget pack log4net.Wrap.csproj
 @cd ..\..\
 
-@cd log4net.Wrap\log4net.Wrap(NET4)
-nuget pack log4net.Wrap(NET4).csproj
-@cd ..\..\
+:@cd log4net.Wrap\log4net.Wrap(NET4)
+:nuget pack log4net.Wrap(NET4).csproj
+:@cd ..\..\

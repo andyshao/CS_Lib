@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
+    <Compile Include="LogPerformancePartial.cs" />
     <Compile Include="PerformanceHelper.cs" />
     <Compile Include="PerformanceCounterHistoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
