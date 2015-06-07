@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
+
+namespace NugetPushTool
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                //在同一目录查找Nuget程序
+                var currentDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+                var nugetExe = currentDir.GetFiles("NuGet.exe");
+                if (!nugetExe.Any())
+                {
+                    Console.WriteLine("没有找到NuGet.exe程序！");
+                }
+
+                //查找Src目录
+                //向上两层
+                var nugetDir = currentDir.Parent;
+                if (nugetDir == null || !nugetDir.Exists)
+                {
+                    Console.WriteLine("没有找到NuGet目录！");
+                }
+
+                var rootDir = nugetDir.Parent;
+                if (rootDir == null || !rootDir.Exists)
+                {
+                    Console.WriteLine("没有找到Src的上层目录！");
+                }
+
+                var srcDir = rootDir.GetDirectories("Src");
+                if (!srcDir[0].Exists)
+                {
+                    Console.WriteLine("没有找到Src的目录！");
+                }
+
+                //调用一次Nuget打包脚本
+                var nugetPackBat = srcDir[0].GetFiles("Nuget_Pack_Release.bat");
+                if (!nugetPackBat.Any())
+                {
+                    Console.WriteLine("Src目录下没有找到Nuget_Pack_Release.bat！");
+                }
+
+                var process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardInput = true;
+                process.StartInfo.CreateNoWindow = false;
+                process.StartInfo.FileName = "CMD.EXE";
+                process.Start();
+
+                //切换目录
+                process.StandardInput.WriteLine(string.Format("CD {0}", srcDir[0].FullName));
+
+                //调用打包脚本
+                process.StandardInput.WriteLine(nugetPackBat[0].FullName);
+
+                //切换回工具目录
+                process.StandardInput.WriteLine(string.Format("CD {0}", currentDir.FullName));
+
+                //收集Src下的待推送文件
+                //规则为目录下有两个nupkg文件，删除版本号小的那个，推送大的那个
+                var nupkgList = srcDir[0].GetFiles("*.nupkg", SearchOption.AllDirectories);
+
+                foreach (var fileInfo in nupkgList)
+                {
+                    //排除第三方库的pack
+                    if (!fileInfo.Directory.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).Any())
+                    {
+                        continue;
+                    }
+
+                    //执行一次删除多余的操作，如果自身还存在再执行推送
+                    var deleteResult = DeleteMoreNupkgFile(fileInfo);
+
+                    //执行过删除旧dll的操作才推送
+                    if (deleteResult && fileInfo.Exists)
+                    {
+                        process.StandardInput.WriteLine(string.Format("NuGet.exe push {0}", fileInfo.FullName));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
+        }
+
+        private static bool DeleteMoreNupkgFile(FileInfo fileInfo)
+        {
+            var result = false;
+
+            if (fileInfo != null && fileInfo.Exists)
+            {
+                var currentDirNupkgFiles = fileInfo.Directory.GetFiles("*.nupkg", SearchOption.TopDirectoryOnly);
+                if (currentDirNupkgFiles.Count() > 1)
+                {
+                    //暂时不考虑按文件前缀分组
+                    var nupkgFiles = currentDirNupkgFiles.OrderByDescending<FileInfo, string>(
+                        (s) => s.FullName, new FileVersionCompare()).ToList();
+
+                    for (int i = 1; i < nupkgFiles.Count(); i++)
+                    {
+                        File.Delete(nupkgFiles[i].FullName);
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }        
+    }
+}

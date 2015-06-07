@@ -31,17 +31,6 @@ namespace Fre.Library.Log.log4net.Wrap
         #region 属性
 
         /// <summary>
-        /// Log4Net的日志管理器
-        /// </summary>
-        public static LogManager LogManager
-        {
-            get
-            {
-                return LogManager;
-            }
-        }
-
-        /// <summary>
         /// 默认日志对象
         /// </summary>
         public static ILog Default
