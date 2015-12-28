@@ -154,6 +154,61 @@ namespace Fre.Library.Log.log4net.Wrap
             }
         }
 
+        /// <summary>
+        /// 格式化Debug日志
+        /// </summary>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void DebugFormat(string format, params object[] args)
+        {
+            DebugFormat(null, format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Debug日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void DebugFormat<T>(string format, params object[] args)
+        {
+            DebugFormat(typeof(T), format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Debug日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void DebugFormat(Type loggerType, string format, params object[] args)
+        {
+            if (loggerType == null && !NullTypeAtuoDetect)
+            {
+                if (_defaultLogger.IsDebugEnabled)
+                {
+                    _defaultLogger.DebugFormat(format, args);
+                }
+            }
+            else
+            {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
+                if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
+                {
+                    _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
+                }
+
+                if (_loggersCacheDictionary[loggerType.FullName].IsDebugEnabled)
+                {
+                    _loggersCacheDictionary[loggerType.FullName].DebugFormat(format, args);
+                }
+            }
+        }
+
         #endregion
 
         #region InfoRecord
@@ -227,6 +282,61 @@ namespace Fre.Library.Log.log4net.Wrap
             }
         }
 
+        /// <summary>
+        /// 格式化Info日志
+        /// </summary>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void InfoFormat(string format, params object[] args)
+        {
+            InfoFormat(null, format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Info日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void InfoFormat<T>(string format, params object[] args)
+        {
+            InfoFormat(typeof(T), format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Info日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void InfoFormat(Type loggerType, string format, params object[] args)
+        {
+            if (loggerType == null && !NullTypeAtuoDetect)
+            {
+                if (_defaultLogger.IsInfoEnabled)
+                {
+                    _defaultLogger.InfoFormat(format, args);
+                }
+            }
+            else
+            {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
+                if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
+                {
+                    _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
+                }
+
+                if (_loggersCacheDictionary[loggerType.FullName].IsInfoEnabled)
+                {
+                    _loggersCacheDictionary[loggerType.FullName].InfoFormat(format, args);
+                }
+            }
+        }
+
         #endregion
 
         #region WarnRecord
@@ -296,6 +406,61 @@ namespace Fre.Library.Log.log4net.Wrap
                     {
                         _loggersCacheDictionary[loggerType.FullName].Warn(message, e);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 格式化Warn日志
+        /// </summary>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void WarnFormat(string format, params object[] args)
+        {
+            WarnFormat(null, format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Warn日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void WarnFormat<T>(string format, params object[] args)
+        {
+            WarnFormat(typeof(T), format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Warn日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void WarnFormat(Type loggerType, string format, params object[] args)
+        {
+            if (loggerType == null && !NullTypeAtuoDetect)
+            {
+                if (_defaultLogger.IsWarnEnabled)
+                {
+                    _defaultLogger.WarnFormat(format, args);
+                }
+            }
+            else
+            {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
+                if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
+                {
+                    _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
+                }
+
+                if (_loggersCacheDictionary[loggerType.FullName].IsWarnEnabled)
+                {
+                    _loggersCacheDictionary[loggerType.FullName].WarnFormat(format, args);
                 }
             }
         }
@@ -402,6 +567,61 @@ namespace Fre.Library.Log.log4net.Wrap
             }
         }
 
+        /// <summary>
+        /// 格式化Error日志
+        /// </summary>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void ErrorFormat(string format, params object[] args)
+        {
+            ErrorFormat(null, format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Error日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void ErrorFormat<T>(string format, params object[] args)
+        {
+            ErrorFormat(typeof(T), format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Error日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void ErrorFormat(Type loggerType, string format, params object[] args)
+        {
+            if (loggerType == null && !NullTypeAtuoDetect)
+            {
+                if (_defaultLogger.IsErrorEnabled)
+                {
+                    _defaultLogger.ErrorFormat(format, args);
+                }
+            }
+            else
+            {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
+                if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
+                {
+                    _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
+                }
+
+                if (_loggersCacheDictionary[loggerType.FullName].IsErrorEnabled)
+                {
+                    _loggersCacheDictionary[loggerType.FullName].ErrorFormat(format, args);
+                }
+            }
+        }
+
         #endregion
 
         #region FatalRecord
@@ -500,6 +720,61 @@ namespace Fre.Library.Log.log4net.Wrap
                     {
                         _loggersCacheDictionary[loggerType.FullName].Fatal(message, e);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 格式化Fatal日志
+        /// </summary>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void FatalFormat(string format, params object[] args)
+        {
+            FatalFormat(null, format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Fatal日志
+        /// </summary>
+        /// <typeparam name="T">日志类型</typeparam>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void FatalFormat<T>(string format, params object[] args)
+        {
+            FatalFormat(typeof(T), format, args);
+        }
+
+        /// <summary>
+        /// 带模块日志对象名称的格式化Fatal日志
+        /// </summary>
+        /// <param name="loggerType">日志类型</param>
+        /// <param name="format">格式化字符串</param>
+        /// <param name="args">格式化参数</param>
+        public static void FatalFormat(Type loggerType, string format, params object[] args)
+        {
+            if (loggerType == null && !NullTypeAtuoDetect)
+            {
+                if (_defaultLogger.IsFatalEnabled)
+                {
+                    _defaultLogger.FatalFormat(format, args);
+                }
+            }
+            else
+            {
+                if (loggerType == null)
+                {
+                    loggerType = AutoDetectType();
+                }
+
+                if (!_loggersCacheDictionary.ContainsKey(loggerType.FullName))
+                {
+                    _loggersCacheDictionary.Add(loggerType.FullName, LogManager.GetLogger(loggerType));
+                }
+
+                if (_loggersCacheDictionary[loggerType.FullName].IsFatalEnabled)
+                {
+                    _loggersCacheDictionary[loggerType.FullName].FatalFormat(format, args);
                 }
             }
         }
