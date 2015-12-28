@@ -6,6 +6,7 @@
     <title>$title$</title>
     <authors>fengrui</authors>
     <owners>fengrui</owners>
+	<projectUrl>https://github.com/fengrui358/CS_Lib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>log4net的一些简单封装</description>
     <copyright>Copyright fengrui358 2015</copyright>

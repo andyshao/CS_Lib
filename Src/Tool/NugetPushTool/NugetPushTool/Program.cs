@@ -64,7 +64,6 @@ namespace NugetPushTool
                 //调用打包脚本
                 Console.WriteLine("开始打包");
                 process.StandardInput.WriteLine(nugetPackBat[0].FullName);
-                Thread.Sleep(2000);
 
                 //切换回工具目录
                 process.StandardInput.WriteLine(string.Format("CD {0}", currentDir.FullName));
@@ -119,7 +118,7 @@ namespace NugetPushTool
             if (fileInfo != null && fileInfo.Exists)
             {
                 var currentDirNupkgFiles = fileInfo.Directory.GetFiles("*.nupkg", SearchOption.TopDirectoryOnly);
-                if (currentDirNupkgFiles.Count() > 1)
+                if (currentDirNupkgFiles.Any())
                 {
                     //暂时不考虑按文件前缀分组
                     var nupkgFiles = currentDirNupkgFiles.OrderByDescending<FileInfo, string>(
